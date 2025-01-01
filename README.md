@@ -1,20 +1,21 @@
 # The Sega CD BIOS, but in Godot
 
 (C) 2025 Framebuffer
+Released under MIT licence.
 
 This is made just so I can learn GDScript *and* 2D nodes at the same time.
 as well as to brush up my skills on 2D transforms.
 
-## The brief
+## 📝 The brief
 
 This project aims to recreate the BIOS of the Sega CD addon for the
 MegaDrive/Genesis console from 1991.
 
-### References
+### 📼 References
 
 <https://www.youtube.com/watch?v=1SOFK9vg45g&list=PLKiyMny0Rz8A-ZGHVwncQL5CEO2n7_lP0>
 
-## Definition
+## 📋 Definition
 
 The Sega CD has 3 different regions, out of which there's about 30 or so variations
 of the same couple transforms.
@@ -34,7 +35,7 @@ All of these can be recreated using the same tools found in Godot's transformati
 For this, effects used will be a mix of both NTSC-U, NTSC-J and PAL; out of all
 varsions released (and available to watch and learn their patterns from).
 
-## Viewports
+## 📺 Viewports
 
 We want to get thet *very crunchy* look for the screen. For this:
 
@@ -44,29 +45,30 @@ We want to get thet *very crunchy* look for the screen. For this:
 - The Viewport for the animated screen will *always* keep the same position relative to the screen.
 - Any cropping will be done to the black borders, obviously taking care the text is not cropped.
   
-## Music
+## 🎵 Music
 
 Well, this one is self explanatory. It autoplays at start and loops until start is pressed.
 
-## File structure
+## 📂 File structure
 
 This project is comprised of:
 
-- main.gd/tscn (this file!):
+- `main.gd/tscn`:
   - Acts as your average singleton in Godot.
   - Contains all the common transforms.
   - Basically runs the main loop.
-- logo_small.gd/tscn: Attached to the smaller logo.
+- `logo_small.gd/tscn`: Attached to the smaller logo.
   - Anything specific to that scene goes here.
-- logo_large.gd/tscn: Attached to the larger logo.
+- `logo_large.gd/tscn`: Attached to the larger logo.
   - Anything specific to that scene goes here.
-- user_interface.gd/tscn: Control node for the UI overlay.
-- [resources]: Any sprite, sound file or external resource goes here.
+- `user_interface.gd/tscn`: Control node for the UI overlay.
+- `[resources]`: Any sprite, sound file or external resource goes here.
 
-## Controls
+## 🎮 Controls
 
 Just the start button to continue to another thing. Everything starts on its own.
 
-## end
+## ♥️ end
 
 well, wish me luck, i guess.
+-frame
