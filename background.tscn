@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnb4wifhaeo2i"]
+
+[ext_resource type="Texture2D" uid="uid://d3tgp66j21x3t" path="res://resources/sprites/building.png" id="1_ove5v"]
+
+[node name="Background" type="Node2D"]
+
+[node name="Building" type="Sprite2D" parent="."]
+position = Vector2(784, 192)
+scale = Vector2(3, 3)
+texture = ExtResource("1_ove5v")
