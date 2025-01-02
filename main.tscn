@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://d0jqp777scy15"]
+[gd_scene load_steps=2 format=3 uid="uid://d0jqp777scy15"]
+
+[ext_resource type="PackedScene" uid="uid://crw5aux2jju3x" path="res://user_interface.tscn" id="1_xcfva"]
 
 [node name="Screen" type="Node2D"]
+top_level = true
+
+[node name="UserInterface" parent="." instance=ExtResource("1_xcfva")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
