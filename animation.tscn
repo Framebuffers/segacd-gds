@@ -1,16 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://cstp6p8sx57wr"]
+[gd_scene load_steps=5 format=3 uid="uid://cstp6p8sx57wr"]
 
 [ext_resource type="PackedScene" uid="uid://brjei14gl5q2q" path="res://logo_large.tscn" id="1_2rec6"]
+[ext_resource type="Script" path="res://animation.gd" id="1_en4tw"]
 [ext_resource type="PackedScene" uid="uid://c1pqowye4071x" path="res://logo_small.tscn" id="2_m01wa"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vvvjb"]
+
 [node name="Animation" type="Node2D"]
+script = ExtResource("1_en4tw")
 
 [node name="LogoLarge" parent="." instance=ExtResource("1_2rec6")]
-position = Vector2(268, 184)
-rotation = 6.28319
+material = SubResource("ShaderMaterial_vvvjb")
+position = Vector2(328, 216)
 
 [node name="LogoSmall" parent="." instance=ExtResource("2_m01wa")]
-position = Vector2(809, 352)
+position = Vector2(729, 344)
 
 [node name="Mask" type="Polygon2D" parent="."]
 z_index = -2

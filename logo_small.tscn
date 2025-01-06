@@ -1,6 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1pqowye4071x"]
+[gd_scene load_steps=5 format=3 uid="uid://c1pqowye4071x"]
 
 [ext_resource type="Script" path="res://logo_small.gd" id="1_5lsyi"]
+[ext_resource type="Shader" path="res://rotation_3d.gdshader" id="1_q1xhw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oths3"]
+shader = ExtResource("1_q1xhw")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wqlk1"]
 size = Vector2(100, 100)
@@ -9,6 +18,7 @@ size = Vector2(100, 100)
 script = ExtResource("1_5lsyi")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_oths3")
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("PlaceholderTexture2D_wqlk1")

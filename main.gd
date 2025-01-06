@@ -4,52 +4,68 @@ extends Node
 @onready var small = get_node("../Screen/SubViewport/Animation/LogoSmall")
 
 func _ready() -> void:
-	incremental_full_body_rotation(large, 3, 2)
-	#rotate_body(large, 3, 3)
-	#transform_rotation_incrementally(large, 3, 5)
-	pass
-
-func incremental_full_body_rotation(body: Node2D, rotations: float, interval: float) -> void:
-	var counter = rotations
-	for i in counter:
-		full_body_rotation(body, interval)
-		counter - 1
-	pass
-
+	large.rotate_x(3.0)
+	#transform_rotation_y(large)
+	#incremental_body_rotation(large, 3, 2.0)
 	
-func _process(delta: float) -> void:
-	#rotate_body_incrementally(large, 3, 5.0)
+	#large.turn(10.0)
+	#flip(large_texture, 3.0)
+	pass
+
+var rotation_tween: Tween
+var speedup_ratio = 1.0
+var speed = 1.0:
+	set = set_speed
+
+func set_speed(new_speed: float) -> void:
+	speed = new_speed
+	speed_up(new_speed)
+	pass
+	
+func speed_up(_value) -> void:
+	rotation_tween.set_speed_scale(1.0/_value)
+	pass
+
+func incremental_body_rotation(body: Node2D, rotations: int, incremental_multiplier: float) -> void:	
+	for i in rotations:
+		full_body_rotation(body, 1)
+		await rotation_tween.finished
+		print(speedup_ratio)
+		speedup_ratio *= incremental_multiplier
+		print(i)
 	pass
 
 func full_body_rotation(body: Node2D, interval: float) -> void:
-	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN)
-	tween.tween_method(custom_rotate.bind(body), 0.0, TAU, interval)
+	rotation_tween = get_tree().create_tween().set_ease(Tween.EASE_IN)
+	speed = interval
+	rotation_tween.set_speed_scale(speed)
+	rotation_tween.tween_method(custom_rotate.bind(body), 0.0, TAU, speed)
+	if rotation_tween.loop_finished:
+		speed /= speedup_ratio
+		print("speed: ", speed, ". loop passed")
+		pass
 
 func custom_rotate(angle, body):
-	#print(body, angle)
 	body.look_at(body.position + Vector2.from_angle(angle))
-	
-	#for i in rotations:
-		#tween.tween_property(body, "rotation", TAU, interval)
-		#interval = clampf(interval - interval/2, 0, interval)
-		#
-		#if interval < 0.2:
-			#break
-		#pass
-		
 
-# tween
-#func rotate_body(body: Node2D, rad: float, interval: float) -> void:
-	#var tween = get_tree().create_tween()
-	#tween.bind_node(body)
-	## tween it lmaooooo
-	#pass
-#
-#
-#func transform_rotation_rad(body: Node2D, angle: int, speed: float) -> void:
-	#body.transform.x = Vector2(cos(angle), sin(angle))
-#
-## old
-##func rotate_body_incrementally(body: Node2D, rotations: int, interval: float) -> void:
-	##rotate_body(body, body.rotation * rotations, interval)
-##pass
+@export var scale: Vector2
+@export var skew: float
+@export var position: Vector2
+
+func transform_rotation_y(body: Node2D) -> void:
+	body.transform = Transform2D(
+		TAU,
+		scale,
+		skew,
+		position)
+	pass
+
+
+
+func flip(texture: TextureRect, duration: float) -> void:
+	#var shader = texture.material.set_shader_parameter('y_rot', 90)
+	#var tween = texture.get_tree().create_tween().bind_node(texture)
+	##texture.flip_h
+	#tween.tween_property(texture, "scale", Vector2(1.0, 1.0), 0.1)
+	#tween.tween_property(texture, "scale", Vector2(1.0, 1.0), duration)
+	pass
