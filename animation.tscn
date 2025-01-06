@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cstp6p8sx57wr"]
+
+[ext_resource type="PackedScene" uid="uid://brjei14gl5q2q" path="res://logo_large.tscn" id="1_2rec6"]
+[ext_resource type="PackedScene" uid="uid://c1pqowye4071x" path="res://logo_small.tscn" id="2_m01wa"]
+
+[node name="Animation" type="Node2D"]
+
+[node name="LogoLarge" parent="." instance=ExtResource("1_2rec6")]
+position = Vector2(268, 184)
+rotation = 6.28319
+
+[node name="LogoSmall" parent="." instance=ExtResource("2_m01wa")]
+position = Vector2(809, 352)
+
+[node name="Mask" type="Polygon2D" parent="."]
+z_index = -2
+texture_repeat = 1
+color = Color(1, 1, 1, 0.164706)
+polygon = PackedVector2Array(128, 128, 1024, 128, 1024, 512, 128, 512)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true

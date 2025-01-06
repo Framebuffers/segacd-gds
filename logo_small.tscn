@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1pqowye4071x"]
+[gd_scene load_steps=3 format=3 uid="uid://c1pqowye4071x"]
 
 [ext_resource type="Script" path="res://logo_small.gd" id="1_5lsyi"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wqlk1"]
+size = Vector2(100, 100)
+
 [node name="LogoSmall" type="Node2D"]
 script = ExtResource("1_5lsyi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("PlaceholderTexture2D_wqlk1")

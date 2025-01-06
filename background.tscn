@@ -1,10 +1,81 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnb4wifhaeo2i"]
+[gd_scene load_steps=12 format=3 uid="uid://cnb4wifhaeo2i"]
 
 [ext_resource type="Texture2D" uid="uid://d3tgp66j21x3t" path="res://resources/sprites/building.png" id="1_ove5v"]
+[ext_resource type="Texture2D" uid="uid://cxbtnqe5rtlj8" path="res://resources/sprites/building-neonsign.png" id="2_xa6kh"]
+[ext_resource type="Texture2D" uid="uid://bxd417adypm2b" path="res://resources/sprites/building-shading.png" id="3_fh0l4"]
+[ext_resource type="Texture2D" uid="uid://cb45pleonk6h6" path="res://resources/sprites/building-store-bg.png" id="4_ewqos"]
+[ext_resource type="Texture2D" uid="uid://c8fqhmnargpdp" path="res://resources/sprites/character.png" id="5_dd2pq"]
+[ext_resource type="Texture2D" uid="uid://c8ue051v0epcl" path="res://resources/sprites/phone-booth.png" id="6_ju48o"]
+[ext_resource type="Texture2D" uid="uid://cep6qncby0xtk" path="res://resources/sprites/store-screens-scanlines.png" id="7_jgmyu"]
+[ext_resource type="Texture2D" uid="uid://bk1j5pik5pejk" path="res://resources/sprites/street-decorations.png" id="8_xbybn"]
+[ext_resource type="Texture2D" uid="uid://bxst0m4002m0a" path="res://resources/sprites/street-lightpoles.png" id="9_5kbpm"]
+[ext_resource type="Texture2D" uid="uid://dkg80u08xn3nh" path="res://resources/sprites/street.png" id="10_pcko2"]
+[ext_resource type="Texture2D" uid="uid://tm2aogc18202" path="res://resources/sprites/vignette.png" id="11_exb1n"]
 
 [node name="Background" type="Node2D"]
+texture_filter = 1
+texture_repeat = 1
 
 [node name="Building" type="Sprite2D" parent="."]
-position = Vector2(784, 192)
-scale = Vector2(3, 3)
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(768, 336)
+scale = Vector2(4, 4)
 texture = ExtResource("1_ove5v")
+metadata/_edit_lock_ = true
+
+[node name="Building-neonsign" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(784, 336)
+scale = Vector2(4, 4)
+texture = ExtResource("2_xa6kh")
+
+[node name="Building-shading" type="Sprite2D" parent="."]
+position = Vector2(752, 244)
+scale = Vector2(4, 4)
+texture = ExtResource("3_fh0l4")
+
+[node name="Building-store-bg" type="Sprite2D" parent="."]
+position = Vector2(708, 284)
+scale = Vector2(4, 4)
+texture = ExtResource("4_ewqos")
+
+[node name="Character" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(656, 432)
+scale = Vector2(4, 4)
+texture = ExtResource("5_dd2pq")
+
+[node name="Phone-booth" type="Sprite2D" parent="."]
+position = Vector2(432, 440)
+scale = Vector2(4, 4)
+texture = ExtResource("6_ju48o")
+
+[node name="Store-screens-scanlines" type="Sprite2D" parent="."]
+position = Vector2(696, 320)
+scale = Vector2(4, 4)
+texture = ExtResource("7_jgmyu")
+
+[node name="Street-decorations" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(40, 440)
+texture = ExtResource("8_xbybn")
+
+[node name="Street-lightpoles" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(344, 392)
+scale = Vector2(4, 4)
+texture = ExtResource("9_5kbpm")
+
+[node name="Street" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(596, 320)
+scale = Vector2(4, 4)
+texture = ExtResource("10_pcko2")
+
+[node name="Vignette" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.6)
+position = Vector2(578, 328)
+scale = Vector2(11.193, 4)
+texture = ExtResource("11_exb1n")
