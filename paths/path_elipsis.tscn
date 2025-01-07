@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bry4dni5notut"]
+
+[sub_resource type="Curve2D" id="Curve2D_e7k26"]
+_data = {
+"points": PackedVector2Array(-0.672729, 110.373, 0.672729, -110.373, 232, 336, -11.5195, -63.8814, 11.5195, 63.8814, 384, 264, -6.36363, 199.091, 6.36363, -199.091, 904, 328, 6.36363, -187.273, -6.36363, 187.273, 384, 264, 45.4545, 72.7273, -45.4545, -72.7273, 232, 336)
+}
+point_count = 5
+
+[node name="Elipsis" type="Path2D"]
+curve = SubResource("Curve2D_e7k26")

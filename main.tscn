@@ -59,3 +59,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_3j4ax")
+
+[node name="Extra" type="Node2D" parent="."]

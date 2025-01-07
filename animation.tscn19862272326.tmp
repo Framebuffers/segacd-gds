@@ -21,6 +21,9 @@ material = SubResource("ShaderMaterial_vvvjb")
 position = Vector2(232, 288)
 rotation = -0.0232516
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="LogoLarge"]
+remote_path = NodePath("..")
+
 [node name="LogoSmall" parent="." instance=ExtResource("2_m01wa")]
 position = Vector2(776, 336)
 
@@ -41,6 +44,3 @@ curve = SubResource("Curve2D_ij1m1")
 [node name="PathFollow2D" type="PathFollow2D" parent="Paths/Elipsis"]
 position = Vector2(232, 264)
 rotation = -0.0232516
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Paths/Elipsis/PathFollow2D"]
-remote_path = NodePath("../../../../LogoLarge")
