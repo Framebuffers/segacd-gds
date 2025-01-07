@@ -1,16 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://brjei14gl5q2q"]
+[gd_scene load_steps=8 format=3 uid="uid://brjei14gl5q2q"]
 
-[ext_resource type="Script" path="res://logo_large.gd" id="1_g81w1"]
-[ext_resource type="Shader" path="res://rotation_3d.gdshader" id="2_ty73n"]
-[ext_resource type="Script" path="res://logos.gd" id="3_lfgnb"]
-
-[sub_resource type="Gradient" id="Gradient_h3e8h"]
-offsets = PackedFloat32Array(0, 0.813333)
-colors = PackedColorArray(0.654902, 0, 0.792157, 1, 0.637184, 0.491316, 0.253775, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_givm7"]
-gradient = SubResource("Gradient_h3e8h")
-fill_to = Vector2(1, 1)
+[ext_resource type="Script" uid="uid://de7fb7l2cxccn" path="res://logos_base.gd" id="1_e7k26"]
+[ext_resource type="Shader" uid="uid://cay3ipimww11b" path="res://rotation_3d.gdshader" id="2_ty73n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2t8s3"]
 shader = ExtResource("2_ty73n")
@@ -22,21 +13,6 @@ shader_parameter/inset = 0.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ntwxw"]
 size = Vector2(500, 100)
-
-[sub_resource type="Animation" id="Animation_pa5tk"]
-resource_name = "turn"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:x_rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2267, 0.733333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [180.0, -90.0, 180.0]
-}
 
 [sub_resource type="Animation" id="Animation_u87cn"]
 length = 0.001
@@ -53,24 +29,38 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_pa5tk"]
+resource_name = "turn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:x_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2267, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [180.0, -90.0, 180.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a1tw4"]
 _data = {
-"RESET": SubResource("Animation_u87cn"),
-"turn": SubResource("Animation_pa5tk")
+&"RESET": SubResource("Animation_u87cn"),
+&"turn": SubResource("Animation_pa5tk")
 }
 
 [node name="LogoLarge" type="Node2D"]
-script = ExtResource("1_g81w1")
-texture = SubResource("GradientTexture2D_givm7")
+script = ExtResource("1_e7k26")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_2t8s3")
-offset_right = 256.0
-offset_bottom = 1.0
+offset_right = 500.0
+offset_bottom = 100.0
 texture = SubResource("PlaceholderTexture2D_ntwxw")
-script = ExtResource("3_lfgnb")
+metadata/_edit_use_anchors_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_a1tw4")
+&"": SubResource("AnimationLibrary_a1tw4")
 }

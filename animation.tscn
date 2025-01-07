@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cstp6p8sx57wr"]
 
 [ext_resource type="PackedScene" uid="uid://brjei14gl5q2q" path="res://logo_large.tscn" id="1_2rec6"]
-[ext_resource type="Script" path="res://animation.gd" id="1_en4tw"]
+[ext_resource type="Script" uid="uid://btcyc1xmf7j7x" path="res://animation.gd" id="1_en4tw"]
 [ext_resource type="PackedScene" uid="uid://c1pqowye4071x" path="res://logo_small.tscn" id="2_m01wa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vvvjb"]

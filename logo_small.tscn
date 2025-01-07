@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1pqowye4071x"]
 
-[ext_resource type="Script" path="res://logo_small.gd" id="1_5lsyi"]
-[ext_resource type="Shader" path="res://rotation_3d.gdshader" id="1_q1xhw"]
+[ext_resource type="Shader" uid="uid://cay3ipimww11b" path="res://rotation_3d.gdshader" id="1_q1xhw"]
+[ext_resource type="Script" uid="uid://de7fb7l2cxccn" path="res://logos_base.gd" id="1_qkyna"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oths3"]
 shader = ExtResource("1_q1xhw")
@@ -15,7 +15,7 @@ shader_parameter/inset = 0.0
 size = Vector2(100, 100)
 
 [node name="LogoSmall" type="Node2D"]
-script = ExtResource("1_5lsyi")
+script = ExtResource("1_qkyna")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_oths3")

@@ -1,10 +1,13 @@
 extends Node
 
 @onready var large = get_node("../Screen/SubViewport/Animation/LogoLarge")
+@onready var large_texture = get_node("../Screen/SubViewport/Animation/LogoLarge/TextureRect")
 @onready var small = get_node("../Screen/SubViewport/Animation/LogoSmall")
+#@onready var animation: Node2D = get_node("../Screen/SubViewport/Animation")
 
 func _ready() -> void:
 	large.rotate_x(3.0)
+	#animation.rotate_x(3.0, large_texture)
 	#transform_rotation_y(large)
 	#incremental_body_rotation(large, 3, 2.0)
 	
