@@ -99,38 +99,55 @@ func bounce(displacement: Vector2, weight: float, angle_rad: float) -> Tween:
 	var original_angle = $TextureRect.rotation
 	var original_position = $TextureRect.position
 	
-	#var transform_rotation: Transform2D = Transform2D($TextureRect.rotation, $TextureRect.rotation+angle_rad)
-	#var transform_translation: Transform2D = Transform2D($TextureRect.position+displacement, $TextureRect.position)
-	#
-	#tween.
-	
 	## left
 	tween.set_parallel()
-	tween.tween_property($TextureRect, "rotation", $TextureRect.rotation+angle_rad, weight*2).as_relative().set_ease(Tween.EASE_OUT)
-	tween.tween_property($TextureRect, "position", $TextureRect.position-displacement, weight*2).as_relative().set_ease(Tween.EASE_OUT)
-	
+	tween.tween_property($TextureRect, "rotation", $TextureRect.rotation+angle_rad*2, weight).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property($TextureRect, "position", $TextureRect.position-displacement, weight*1.1).as_relative().set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($TextureRect, "rotation", angle_rad, weight).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
 	## back
 	tween.chain()
-	tween.tween_property($TextureRect, "rotation",  $TextureRect.rotation-angle_rad, weight).as_relative().set_ease(Tween.EASE_OUT)
-	tween.tween_property($TextureRect, "position", $TextureRect.position+displacement, weight).as_relative().set_ease(Tween.EASE_OUT)
-	
-	## right
+	tween.tween_property($TextureRect, "rotation",  $TextureRect.rotation-angle_rad, weight*1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
 	tween.set_parallel()
-	tween.chain()
-	tween.tween_property($TextureRect, "rotation", $TextureRect.rotation-angle_rad, weight*2).as_relative().set_ease(Tween.EASE_OUT)
-	tween.tween_property($TextureRect, "position", $TextureRect.position+2*displacement, weight*2).as_relative().set_ease(Tween.EASE_OUT)
+	tween.tween_property($TextureRect, "position", $TextureRect.position+displacement-(Vector2(0., displacement.y*1.5)), weight*1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
 	
+	### right
+	#
 	#tween.chain()
-	#var tween_back = $TextureRect.create_tween()
+	#tween.tween_property($TextureRect, "rotation", $TextureRect.rotation-angle_rad*4, weight).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
 	#tween.set_parallel()
-	#tween_back.tween_property($TextureRect, "rotation",  $TextureRect.rotation-angle_rad, weight)
-	#tween_back.tween_property($TextureRect, "position", $TextureRect.position+displacement, weight)
-	#tween.tween_property($TextureRect, "rotation", -original_angle-2*angle_rad, weight)
+	#tween.tween_property($TextureRect, "position", $TextureRect.position+displacement-(Vector2(0., displacement.y*1.5)), weight/.9).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
+	
+	## back
+	### back
+	#tween.chain()
+	#tween.tween_property($TextureRect, "rotation",  $TextureRect.rotation*angle_rad, weight/1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
 	#tween.set_parallel()
-	#tween.tween_property($TextureRect, "position", -$TextureRect.position+2*displacement, weight)
-	#tween.set_parallel()
-	#tween.tween_property($TextureRect, "position", -$TextureRect.position.y-displacement.x, weight)
-	#tween.tween_property($TextureRect, "position", $TextureRect.position*displacement, weight)
-	#tween.set_parallel()
-	#tween.tween_property($TextureRect, "rotation", angle_rad, weight)	
+	#tween.tween_property($TextureRect, "position", $TextureRect.position+displacement, weight/1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
 	return tween
+#
+#func copy(source: TextureRect, destination: Node2D, offset: Vector2, interval: float) -> bool:
+	#if true:
+		#var timer: Timer = Timer.new()
+		#destination.add_child(timer)
+		#timer.wait_time = interval
+		#timer.one_shot = true
+		#timer.start()
+		#print(timer.time_left)
+		#await timer.timeout
+		#var new = source.duplicate()
+		#new.position += offset
+		#destination.add_child(new)
+	#else:
+		#pass
+
+func copy(source: TextureRect, destination: Node2D, offset: Vector2, interval: float) -> void:
+	await destination.get_tree().create_timer(interval).timeout
+	var new: TextureRect = source.duplicate()
+	new.global_position = source.global_position + offset
+	destination.add_child(new)
+
+func multi_copy(source: TextureRect, destination: Node2D, offset: Vector2, interval: float, counts: int) -> void:
+	var incremental_offset = offset
+	for i in counts:
+		copy(source, destination, incremental_offset, interval)
+		incremental_offset += offset

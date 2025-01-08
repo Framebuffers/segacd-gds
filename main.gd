@@ -6,9 +6,11 @@ extends Node
 @onready var animation: Node2D = get_node("../Screen/SubViewport/Animation")
 const Rotations = preload("res://rotations.gd")
 var rotations = Rotations.new()
+var location = Vector2(5,5)
 
 func _ready() -> void:
-	var tween1: Tween = large.bounce(Vector2(30, 0), .3, -.1)
+	#var tween1: Tween = large.bounce(Vector2(50.0, -50.0), 0.3, -0.1)
+	large.multi_copy(large_texture, animation, location, get_process_delta_time(), 10)
 	#var tween2: Tween = large.bounce(Vector2(-100, 100), .5, -0.1)
 	#rotations.incremental_body_rotation(large, 10, 1.0)
 	#rotations.incremental_body_rotation_loop_finished.connect(on_finished_rotation)
@@ -17,8 +19,11 @@ func _ready() -> void:
 func on_finished_rotation() -> void:
 	print("signal emitted from finished loop")
 
+
 #func _process(delta: float) -> void:
-	#large.move_alongside_path(.1, get_node("../Screen/SubViewport/Animation/Paths/Elipsis/PathFollow2D/"))
+	
+	#location += location*.25
+	###large.move_alongside_path(.1, get_node("../Screen/SubViewport/Animation/Paths/Elipsis/PathFollow2D/"))
 
 
 #@export var scale: Vector2
