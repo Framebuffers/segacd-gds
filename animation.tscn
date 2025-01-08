@@ -19,6 +19,7 @@ script = ExtResource("1_en4tw")
 [node name="LogoLarge" parent="." instance=ExtResource("1_2rec6")]
 material = SubResource("ShaderMaterial_vvvjb")
 position = Vector2(232, 288)
+rotation = -0.0232516
 
 [node name="LogoSmall" parent="." instance=ExtResource("2_m01wa")]
 position = Vector2(776, 336)
