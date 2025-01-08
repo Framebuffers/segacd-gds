@@ -3,6 +3,23 @@ extends Node2D
 @onready var texture: TextureRect = $TextureRect
 @onready var path_follow_2d: PathFollow2D = $"../Paths/Elipsis/PathFollow2D"
 
+# Pivot truth table:
+# 	     |   left   |  center  |  right   |
+# 		 |--------------------------------|
+#   left | 0.0, 0.0 | 0.5, 0.0 | 1.0, 0.0 |
+# center | 0.0, 0.5 | 0.5, 0.5 | 1.0, 0.5 |
+#  right | 0.0, 1.0 | 0.5, 1.0 | 1.0, 1.0 |
+
+const TOP_LEFT: Vector2 = Vector2(0.0, 0.0)
+const TOP_CENTER: Vector2 = Vector2(0.5, 0.0)
+const TOP_RIGHT: Vector2 = Vector2(1.0, 0.0)
+const CENTER_LEFT: Vector2 = Vector2(0.0, 0.5)
+const CENTER: Vector2 = Vector2(0.5, 0.5)
+const CENTER_RIGHT: Vector2 = Vector2(1.0, 0.5)
+const BOTTOM_LEFT: Vector2 = Vector2(0.0, 1.0)
+const BOTTOM_CENTER: Vector2 = Vector2(0.5, 1.0)
+const BOTTOM_RIGHT: Vector2 = Vector2(1.0, 1.0)
+
 ### Helper function to get the X rotation angle (in degrees) in the transformation shader.
 func get_rotation_x() -> float:
 	return $TextureRect.material.get_shader_parameter("x_rot")
@@ -56,3 +73,64 @@ func rotate_following_path(path: PathFollow2D, interval: float) -> void:
 ## WARN: Must be run in _process().
 func move_alongside_path(progress_ratio: float, path_follow: PathFollow2D) -> void:
 	path_follow.progress += progress_ratio * get_process_delta_time()
+
+func bounce(displacement: Vector2, weight: float, angle_rad: float) -> Tween:
+	# angles:
+	# 	left: (negative)
+	# 	right: (positive)
+	#
+	# maybe: lerp/tween bouncing?
+	#
+	# goes up, then to one side, then jumps from there to the other, and goes back to the centre.
+	# movements are eased_out: like they're in gravity.
+	# not going to simulate a whole gravity system.
+	
+	# jump. positions are all relative to its current position
+	
+	# take the current position
+	# a bounce has:
+	# 	- displacement to one side
+	# 	- gravity pulls it down
+	# 		- thrown to one side multiplied by the weight
+	#		- rotate it
+	# 		- mirror the bounce back
+	
+	var tween = $TextureRect.create_tween()
+	var original_angle = $TextureRect.rotation
+	var original_position = $TextureRect.position
+	
+	#var transform_rotation: Transform2D = Transform2D($TextureRect.rotation, $TextureRect.rotation+angle_rad)
+	#var transform_translation: Transform2D = Transform2D($TextureRect.position+displacement, $TextureRect.position)
+	#
+	#tween.
+	
+	## left
+	tween.set_parallel()
+	tween.tween_property($TextureRect, "rotation", $TextureRect.rotation+angle_rad, weight*2).as_relative().set_ease(Tween.EASE_OUT)
+	tween.tween_property($TextureRect, "position", $TextureRect.position-displacement, weight*2).as_relative().set_ease(Tween.EASE_OUT)
+	
+	## back
+	tween.chain()
+	tween.tween_property($TextureRect, "rotation",  $TextureRect.rotation-angle_rad, weight).as_relative().set_ease(Tween.EASE_OUT)
+	tween.tween_property($TextureRect, "position", $TextureRect.position+displacement, weight).as_relative().set_ease(Tween.EASE_OUT)
+	
+	## right
+	tween.set_parallel()
+	tween.chain()
+	tween.tween_property($TextureRect, "rotation", $TextureRect.rotation-angle_rad, weight*2).as_relative().set_ease(Tween.EASE_OUT)
+	tween.tween_property($TextureRect, "position", $TextureRect.position+2*displacement, weight*2).as_relative().set_ease(Tween.EASE_OUT)
+	
+	#tween.chain()
+	#var tween_back = $TextureRect.create_tween()
+	#tween.set_parallel()
+	#tween_back.tween_property($TextureRect, "rotation",  $TextureRect.rotation-angle_rad, weight)
+	#tween_back.tween_property($TextureRect, "position", $TextureRect.position+displacement, weight)
+	#tween.tween_property($TextureRect, "rotation", -original_angle-2*angle_rad, weight)
+	#tween.set_parallel()
+	#tween.tween_property($TextureRect, "position", -$TextureRect.position+2*displacement, weight)
+	#tween.set_parallel()
+	#tween.tween_property($TextureRect, "position", -$TextureRect.position.y-displacement.x, weight)
+	#tween.tween_property($TextureRect, "position", $TextureRect.position*displacement, weight)
+	#tween.set_parallel()
+	#tween.tween_property($TextureRect, "rotation", angle_rad, weight)	
+	return tween

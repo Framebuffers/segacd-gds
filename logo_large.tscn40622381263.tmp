@@ -58,6 +58,7 @@ script = ExtResource("1_e7k26")
 material = SubResource("ShaderMaterial_2t8s3")
 offset_right = 500.0
 offset_bottom = 100.0
+rotation = 0.148353
 pivot_offset = Vector2(500, 50)
 texture = SubResource("PlaceholderTexture2D_ntwxw")
 metadata/_edit_use_anchors_ = true

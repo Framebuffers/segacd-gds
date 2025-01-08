@@ -24,7 +24,7 @@ func incremental_body_rotation(body: Node2D, rotations: int, incremental_multipl
 	pass
 
 func full_body_rotation(body: Node2D, interval: float) -> void:
-	rotation_tween = body.get_tree().create_tween().set_ease(Tween.EASE_IN)
+	rotation_tween = body.get_tree().create_tween().set_ease(Tween.EASE_IN).parallel()
 	speed = interval
 	rotation_tween.set_speed_scale(speed)
 	rotation_tween.tween_method(custom_rotate.bind(body), 0.0, TAU, speed)

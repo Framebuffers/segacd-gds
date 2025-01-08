@@ -8,11 +8,17 @@ const Rotations = preload("res://rotations.gd")
 var rotations = Rotations.new()
 
 func _ready() -> void:
-	rotations.incremental_body_rotation(large, 3, 2.0)
+	var tween1: Tween = large.bounce(Vector2(30, 0), .3, -.1)
+	#var tween2: Tween = large.bounce(Vector2(-100, 100), .5, -0.1)
+	#rotations.incremental_body_rotation(large, 10, 1.0)
+	#rotations.incremental_body_rotation_loop_finished.connect(on_finished_rotation)
 	pass
 
-func _process(delta: float) -> void:
-	large.move_alongside_path(10.0, get_node("../Screen/SubViewport/Animation/Paths/Elipsis/PathFollow2D/"))
+func on_finished_rotation() -> void:
+	print("signal emitted from finished loop")
+
+#func _process(delta: float) -> void:
+	#large.move_alongside_path(.1, get_node("../Screen/SubViewport/Animation/Paths/Elipsis/PathFollow2D/"))
 
 
 #@export var scale: Vector2
