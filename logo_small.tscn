@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1pqowye4071x"]
 
-[ext_resource type="Shader" uid="uid://cay3ipimww11b" path="res://rotation_3d.gdshader" id="1_q1xhw"]
-[ext_resource type="Script" uid="uid://de7fb7l2cxccn" path="res://logos_base.gd" id="1_qkyna"]
+[ext_resource type="Shader" uid="uid://btrumwlflndlp" path="res://rotation_3d.gdshader" id="1_q1xhw"]
+[ext_resource type="Script" uid="uid://de7fb7l2cxccn" path="res://logo_base.gd" id="1_qkyna"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oths3"]
 shader = ExtResource("1_q1xhw")
@@ -14,11 +14,21 @@ shader_parameter/inset = 0.0
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wqlk1"]
 size = Vector2(100, 100)
 
-[node name="LogoSmall" type="Node2D"]
+[node name="LogoSmall" type="Node2D" node_paths=PackedStringArray("texture")]
 script = ExtResource("1_qkyna")
+texture = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_oths3")
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_wqlk1")

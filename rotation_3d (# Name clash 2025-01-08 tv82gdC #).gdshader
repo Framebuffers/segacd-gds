@@ -37,11 +37,13 @@ void vertex(){
 	inv_rot_mat[2][1] = -sin_c;
 	inv_rot_mat[2][2] = cos_b * cos_c;
 
+
 	float t = tan(fov / 360.0 * PI);
 	p = inv_rot_mat * vec3((UV - 0.5), 0.5 / t);
 	float v = (0.5 / t) + 0.5;
 	p.xy *= v * inv_rot_mat[2].z;
 	o = v * inv_rot_mat[2].xy;
+
 	VERTEX += (UV - 0.5) / TEXTURE_PIXEL_SIZE * t * (1.0 - inset);
 }
 
