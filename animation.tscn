@@ -1,29 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://cstp6p8sx57wr"]
+[gd_scene load_steps=4 format=3 uid="uid://cstp6p8sx57wr"]
 
 [ext_resource type="PackedScene" uid="uid://brjei14gl5q2q" path="res://logo_large.tscn" id="1_2rec6"]
 [ext_resource type="PackedScene" uid="uid://c1pqowye4071x" path="res://logo_small.tscn" id="2_m01wa"]
-[ext_resource type="PackedScene" uid="uid://bry4dni5notut" path="res://paths/path_elipsis.tscn" id="4_ij1m1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vvvjb"]
-
-[sub_resource type="Curve2D" id="Curve2D_ij1m1"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 232, 264, 0, 0, 0, 0, 920, 248, 0, 0, 0, 0, 552, 352, 0, 0, 0, 0, 232, 264)
-}
-point_count = 4
 
 [node name="Animation" type="Node2D"]
 
 [node name="LogoLarge" parent="." instance=ExtResource("1_2rec6")]
-visible = false
 material = SubResource("ShaderMaterial_vvvjb")
-position = Vector2(227.695, 283.22)
-rotation = -0.0232516
-scale = Vector2(1.0125, 0.996243)
+position = Vector2(0, 0)
 
-[node name="LogoSmall" parent="." node_paths=PackedStringArray("path_follow_2d") instance=ExtResource("2_m01wa")]
-visible = false
-path_follow_2d = NodePath("../Paths/Elipsis/PathFollow2D")
+[node name="LogoSmall" parent="." instance=ExtResource("2_m01wa")]
 
 [node name="Mask" type="Polygon2D" parent="."]
 z_index = -2
@@ -34,16 +22,5 @@ metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="Paths" type="Node2D" parent="."]
+visible = false
 position = Vector2(-4.305, -4.78)
-
-[node name="Elipsis" parent="Paths" instance=ExtResource("4_ij1m1")]
-position = Vector2(0, 24)
-curve = SubResource("Curve2D_ij1m1")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Paths/Elipsis"]
-position = Vector2(232, 264)
-rotation = -0.0232516
-scale = Vector2(1.0125, 0.996243)
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Paths/Elipsis/PathFollow2D"]
-remote_path = NodePath("../../../../LogoLarge")

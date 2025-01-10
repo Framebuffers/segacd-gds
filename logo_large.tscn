@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://brjei14gl5q2q"]
+[gd_scene load_steps=9 format=3 uid="uid://brjei14gl5q2q"]
 
 [ext_resource type="Script" uid="uid://de7fb7l2cxccn" path="res://logo_base.gd" id="1_e7k26"]
 [ext_resource type="Shader" uid="uid://btrumwlflndlp" path="res://rotation_3d.gdshader" id="2_ty73n"]
@@ -11,8 +11,11 @@ shader_parameter/y_rot = 0.0
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ntwxw"]
-size = Vector2(500, 100)
+[sub_resource type="Gradient" id="Gradient_e7k26"]
+colors = PackedColorArray(0.402364, 0.00192446, 0.700984, 1, 0.154045, 0.665209, 0.605399, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vjvcc"]
+gradient = SubResource("Gradient_e7k26")
 
 [sub_resource type="Animation" id="Animation_u87cn"]
 length = 0.001
@@ -69,7 +72,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(500, 50)
-texture = SubResource("PlaceholderTexture2D_ntwxw")
+texture = SubResource("GradientTexture1D_vjvcc")
 metadata/_edit_use_anchors_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

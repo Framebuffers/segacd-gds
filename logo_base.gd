@@ -5,6 +5,13 @@ class_name LogoBase extends Node2D
 
 signal process_finished
 
+func _ready() -> void:
+	print("a")
+	global_position = get_viewport().get_window().size/2
+	visible = true
+	texture.visible = true
+	#print_tree_pretty()
+
 # rotation X
 var rotation_tween_x: Tween
 var speedup_ratio_x = 1.0
@@ -67,23 +74,14 @@ const Pivots = {
 	PIVOT_BOTTOM_CENTER = Vector2(0.5, 1.0),
 	PIVOT_BOTTOM_RIGHT = Vector2(1.0, 1.0)
 }
-#const PIVOT_TOP_LEFT: Vector2 = Vector2(0.0, 0.0)
-#const PIVOT_TOP_CENTER: Vector2 = Vector2(0.5, 0.0)
-#const PIVOT_TOP_RIGHT: Vector2 = Vector2(1.0, 0.0)
-#const PIVOT_CENTER_LEFT: Vector2 = Vector2(0.0, 0.5)
-#const PIVOT_CENTER: Vector2 = Vector2(0.5, 0.5)
-#const PIVOT_CENTER_RIGHT: Vector2 = Vector2(1.0, 0.5)
-#const PIVOT_BOTTOM_LEFT: Vector2 = Vector2(0.0, 1.0)
-#const PIVOT_BOTTOM_CENTER: Vector2 = Vector2(0.5, 1.0)
-#const PIVOT_BOTTOM_RIGHT: Vector2 = Vector2(1.0, 1.0)
 
 const SHADER_X_ROTATION = "x_rot"
 const SHADER_Y_ROTATION = "y_rot"
 
-func get_texture() -> TextureRect: return texture
-func set_texture(new_texture: TextureRect) -> void: texture = new_texture 
+#func get_texture() -> TextureRect: return texture
+#func set_texture(new_texture: TextureRect) -> void: texture = new_texture 
 
-func _process(delta: float) -> void: set_texture(texture)
+#func _process(delta: float) -> void:
 
 ### Helper function to get the X rotation angle (in degrees) in the transformation shader.
 func get_rotation_x() -> float:
@@ -123,12 +121,11 @@ func cross_rotate(interval: float) -> void:
 	# the rads are there because of some funny glitches if I worked with degrees(????)
 	var original_angle_x = get_rotation_x()
 	var original_angle_y = get_rotation_y()
-	#var original_angle = texture.rotation
+
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_method(set_rotation_x, original_angle_x, rad_to_deg(TAU), interval)
 	tween.tween_method(set_rotation_y, original_angle_y, rad_to_deg(TAU), interval)
-	#tween.tween_property(texture, "rotation", TAU, interval)
 
 func rotate_following_path(path: PathFollow2D, interval: float) -> void:
 	var tween = get_tree().create_tween()
@@ -155,30 +152,7 @@ func multi_copy(source: TextureRect, destination: Node2D, offset: Vector2, inter
 		incremental_offset += offset
 
 func bounce(displacement: Vector2, weight: float, angle_rad: float) -> Tween:
-	# angles:
-	# 	left: (negative)
-	# 	right: (positive)
-	#
-	# maybe: lerp/tween bouncing?
-	#
-	# goes up, then to one side, then jumps from there to the other, and goes back to the centre.
-	# movements are eased_out: like they're in gravity.
-	# not going to simulate a whole gravity system.
-	
-	# jump. positions are all relative to its current position
-	
-	# take the current position
-	# a bounce has:
-	# 	- displacement to one side
-	# 	- gravity pulls it down
-	# 		- thrown to one side multiplied by the weight
-	#		- rotate it
-	# 		- mirror the bounce back
-	
 	var tween = texture.create_tween()
-	#var original_angle = texture.rotation
-	#var original_position = texture.position
-	
 	## left
 	tween.set_parallel()
 	tween.tween_property(texture, "rotation", texture.rotation+angle_rad*2, weight).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_EXPO)
@@ -188,23 +162,7 @@ func bounce(displacement: Vector2, weight: float, angle_rad: float) -> Tween:
 	tween.chain()
 	tween.tween_property(texture, "rotation",  texture.rotation-angle_rad, weight*1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
 	tween.set_parallel()
-	tween.tween_property(texture, "position", texture.position+displacement-(Vector2(0., displacement.y*1.5)), weight*1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
-	
-	### right
-	#
-	#tween.chain()
-	#tween.tween_property(texture, "rotation", texture.rotation-angle_rad*4, weight).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
-	#tween.set_parallel()
-	#tween.tween_property(texture, "position", texture.position+displacement-(Vector2(0., displacement.y*1.5)), weight/.9).as_relative().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
-	
-	## back
-	### back
-	#tween.chain()
-	#tween.tween_property(texture, "rotation",  texture.rotation*angle_rad, weight/1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
-	#tween.set_parallel()
-	#tween.tween_property(texture, "position", texture.position+displacement, weight/1.25).as_relative().set_ease(Tween.EASE_IN_OUT)
 	return tween
-
 
 # INCREMENTAL BODY ROTATIONS
 # rotation_x
@@ -268,26 +226,19 @@ func full_body_rotation_z(body: Node2D, interval: float) -> void:
 	rotation_tween_z = body.get_tree().create_tween().set_ease(Tween.EASE_IN).parallel()
 	speed_z = interval
 	rotation_tween_z.set_speed_scale(speed_z)
-	rotation_tween_z.tween_method(custom_rotate_z.bind(body), 0.0, TAU, speed_z)
+	rotation_tween_z.tween_method(_custom_rotate_z.bind(body), 0.0, TAU, speed_z)
 	if rotation_tween_z.loop_finished:
 		speed_z += speedup_ratio_z
 		print("speed: ", speed_z, ". loop passed")
 		pass
 
 func rotate_z(body: Node2D, interval: float) -> Tween:
-	#var original_angle = get_rotation_x()
-	#var tween = get_tree().create_tween()
-	#tween.tween_method(set_rotation_x, original_angle, rad_to_deg(TAU), interval).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUART)
-	#tween.set_parallel()
-	#tween.tween_method(set_rotation_x, get_rotation_x(), rad_to_deg(TAU), interval).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUART)
-	#return tween
 	var tween = get_tree().create_tween()
 	tween.set_speed_scale(interval)
-	tween.tween_method(custom_rotate_z.bind(body), 0.0, TAU, interval)
+	tween.tween_method(_custom_rotate_z.bind(body), 0.0, TAU, interval)
 	tween.set_parallel()
 	tween.emit_signal("process_finished")
 	return tween
 
-
-func custom_rotate_z(angle, body):
+func _custom_rotate_z(angle, body):
 	body.look_at(body.position + Vector2.from_angle(angle))
