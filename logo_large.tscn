@@ -53,10 +53,9 @@ _data = {
 &"turn": SubResource("Animation_pa5tk")
 }
 
-[node name="LogoLarge" type="Node2D" node_paths=PackedStringArray("texture")]
+[node name="LogoLarge" type="Node2D"]
 position = Vector2(1, 0)
 script = ExtResource("1_e7k26")
-texture = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_2t8s3")

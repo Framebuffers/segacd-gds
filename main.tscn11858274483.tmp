@@ -103,7 +103,6 @@ texture_filter = 1
 texture_repeat = 1
 texture = SubResource("ViewportTexture_yuc66")
 polygon = PackedVector2Array(128, 96, 1024, 96, 1024, 320.304, 1024, 536, 128, 536)
-metadata/_edit_lock_ = true
 
 [node name="ScreenOut" type="TextureRect" parent="Mask"]
 texture_filter = 1
@@ -111,8 +110,6 @@ texture_repeat = 1
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = SubResource("ViewportTexture_lquwl")
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(1152, 648)
@@ -124,27 +121,28 @@ script = ExtResource("2_lquwl")
 
 [node name="LogoLarge" type="Node2D" parent="SubViewport/Animation"]
 material = SubResource("ShaderMaterial_vvvjb")
+position = Vector2(500, 250)
 script = ExtResource("3_lquwl")
 
 [node name="TextureRect" type="TextureRect" parent="SubViewport/Animation/LogoLarge"]
 material = SubResource("ShaderMaterial_2t8s3")
-clip_contents = true
-custom_minimum_size = Vector2(500, 300)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -200.0
-offset_right = 375.0
-offset_bottom = 200.0
+offset_left = -250.0
+offset_top = -50.0
+offset_right = 250.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(500, 50)
 texture = SubResource("GradientTexture1D_vjvcc")
 metadata/_edit_use_anchors_ = true
 
 [node name="LogoSmall" type="Node2D" parent="SubViewport/Animation"]
+position = Vector2(500, 250)
 script = ExtResource("3_lquwl")
 
 [node name="TextureRect" type="TextureRect" parent="SubViewport/Animation/LogoSmall"]
@@ -155,9 +153,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -128.0
-offset_top = -250.0
+offset_top = -50.0
 offset_right = 128.0
-offset_bottom = 250.0
+offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_lvx4l")
@@ -207,6 +205,3 @@ grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_3j4ax")
 
 [node name="Extra" type="Node2D" parent="."]
-
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(128, 96)

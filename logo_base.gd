@@ -1,16 +1,9 @@
 class_name LogoBase extends Node2D
 
-@export var texture: TextureRect
+#@export var texture: TextureRect
 @export var path_follow_2d: PathFollow2D
-
+@onready var texture: TextureRect = $TextureRect
 signal process_finished
-
-func _ready() -> void:
-	print("a")
-	global_position = get_viewport().get_window().size/2
-	visible = true
-	texture.visible = true
-	#print_tree_pretty()
 
 # rotation X
 var rotation_tween_x: Tween
@@ -242,3 +235,71 @@ func rotate_z(body: Node2D, interval: float) -> Tween:
 
 func _custom_rotate_z(angle, body):
 	body.look_at(body.position + Vector2.from_angle(angle))
+
+func swap_small_with_large(body_a: Node2D, body_b: Node2D) -> void:
+	# get vport dimensions
+	var center = get_viewport().get_window().size/2
+	body_b.visible = false
+	body_a.visible = false
+	
+	body_a.global_position = center
+	body_b.visible = true
+	
+	 ##move diagonally
+	var x_back = body_a.global_position.x - center.x/2
+	var y_back = body_a.global_position.y - center.y/2
+	#small.global_position.x - center.x/2, small.global_position.y - center.y/2
+
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(small, "transform", t, 1)
+	
+	var position = Vector2(body_a.global_position.x - center.x/2, body_b.global_position.y - center.y/2)
+	var x: Array = _bake_ellipse(50, Vector2(center), Vector2(position))
+	
+	for offset in x:
+		var tween = get_tree().create_tween()
+		tween.tween_property(body_a, "global_position", offset, .1)
+		await tween.finished
+	pass
+
+func transform_from_parent(parent: Node2D, child: Node2D, where: Vector2) -> Transform2D:
+	var t = Transform2D()
+	var origin = parent.x * child.origin.x + parent.y * child.origin.y + parent.origin
+	var basis_x = parent.x * child.x.x + parent.y * child.x.y
+	var basis_y = parent.x * child.y.x + parent.y * child.y.y
+	return t
+
+func zoom(source: Node2D, scale: float, rotation_rad: float = 0.0) -> Transform2D:
+	var t = Transform2D()
+	t.x *= scale
+	t.y *= scale
+	return t.rotated(rotation_rad)
+
+func uniform_scaling(amount: float) -> Transform2D:
+	var t = Transform2D()
+	t.x *= amount
+	t.y *= amount
+	return t
+
+func _bake_ellipse(point_count: int, ellipse_center: Vector2, radius: Vector2) -> Array:
+	var points = [] 
+	for i in range(point_count): 
+		var c = i * PI * 2 / point_count
+		var x = ellipse_center.x + radius.x * cos(c) 
+		var y = ellipse_center.y + radius.y * sin(c)
+		points.append(Vector2(x, y)) 
+	return points
+
+## NOTE: it only returns the X,Y coords where it should be, it doesn't animate
+func rotate_from_offset(body: Node2D, circle_x_y: Vector2, delta_between_points: float, origin_point: Vector2, duration: float = .1, rotation: float = 0.0) -> void:
+	body.global_position = origin_point
+	var x: Array = _bake_ellipse(10, origin_point, circle_x_y)
+	#x = x.slice(0, x.size()-x.size()/4, 1)
+	for offset in x:
+		var tween = body.get_tree().create_tween()
+		tween.tween_property(body, "global_position", offset, duration)
+		tween.set_parallel()
+		tween.tween_property(body, "scale", Vector2(0.0, 0.0), duration*2)
+		await tween.finished
+		#print("offset: x = ", offset.x, " y= ", offset.y, "\n\t[diff= ", Vector2(origin_point.x, origin_point.x), ", ", Vector2(origin_point.y, offset.y), " \n\tposition= ", Vector2(offset.x, offset.x), ", ", Vector2(origin_point.x, offset.x), "]\n\n")
+	pass
