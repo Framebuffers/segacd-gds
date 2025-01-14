@@ -43,11 +43,13 @@ func _init(node_a: LogoBase, node_b: LogoBase, vport: SubViewport) -> void:
 	#print("bottom_right: ", vport_x, "x", vport_y)
 	#var bottom_right = Vector2(vport_x, vport_y)
 
-func anim0_swap(transition_timer_1: float, transition_speed_1: float, transition_timer_2: float, transition_speed_2: float) -> void:
+func exec(transition_timer_1: float, transition_speed_1: float, transition_timer_2: float, transition_speed_2: float) -> void:
 	# init
 	var center = viewport.size/2
 	var third: Vector2 = viewport.size/3
 	var third_left: Vector2 = Vector2(center.x+third.x/2, third.y*2)
+	var third_right_top: Vector2 = Vector2(center.x+center.x/3, center.y-center.y/3)
+	var third_right_bottom: Vector2 = Vector2(center.x-center.x/3, center.y+center.y/3)
 	#var third_right: Vector2 = Vector2(third.x+, third.y)
 	a.global_position = center
 	b.global_position = center

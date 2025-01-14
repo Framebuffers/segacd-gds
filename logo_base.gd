@@ -97,6 +97,7 @@ func rotate_x(interval: float) -> Tween:
 	var original_angle = get_rotation_x()
 	var tween = get_tree().create_tween()
 	tween.tween_method(set_rotation_x, original_angle, rad_to_deg(TAU), interval).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUART)
+	process_finished.emit()
 	tween.set_parallel()
 	tween.tween_method(set_rotation_x, get_rotation_x(), rad_to_deg(TAU), interval).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUART)
 	return tween
