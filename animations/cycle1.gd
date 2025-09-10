@@ -1,6 +1,4 @@
 class_name cycle1 extends Node2D
-const Main = preload("res://main.gd")
-var main = Main.new()
 
 signal done
 

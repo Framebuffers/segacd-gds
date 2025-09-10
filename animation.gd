@@ -9,18 +9,23 @@ extends Node2D
 
 const Cycle1 = preload("res://animations/cycle1.gd")
 const Somersault = preload("res://animations/somersault.gd")
+const Bounce = preload("res://animations/bounce.gd")
 
 func _ready() -> void:
-	#var cycle1 = Cycle1.new(large, small, $"..")
+	var cycle1 = Cycle1.new(large, small, $"..")
 	var somersault_1 = Somersault.new(large, small, $"..")
+	var bounce =  Bounce.new(large, small, $"..")
 	large.visible = false
 	small.visible = false
-	
-	var t = get_tree().create_timer(3)
-	await t.timeout
-	
+	#
+	#var t = get_tree().create_timer(3)
+	#await t.timeout
+	#
 	#cycle1.exec(2, 1, 1, 1)
 	#await cycle1.done
 	#
-	somersault_1.exec()
+	#somersault_1.exec()
+	#await cycle1.done
+	#
+	bounce.exec()
 	pass

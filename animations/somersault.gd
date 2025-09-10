@@ -1,10 +1,10 @@
 class_name somersault extends Node2D
-const Main = preload("res://main.gd")
-var main = Main.new()
 
 var a: LogoBase
 var b: LogoBase
 var viewport: SubViewport
+
+signal done
 
 func _init(node_a: LogoBase, node_b: LogoBase, vport: SubViewport) -> void:
 	a = node_a
@@ -21,7 +21,8 @@ func exec() -> void:
 	# starting position: change to current in final
 	a.global_position = center
 	b.global_position = center
-	
+	a.scale = Vector2.ONE
+
 	# change to use the current state of the screen, not a default one
 	a.visible = true
 	b.visible = false
@@ -45,6 +46,7 @@ func exec() -> void:
 	jump_a1.set_parallel()
 	a.rotate_x(1.5) # turn
 	jump_a1.chain()
+	b.scale = Vector2.ONE
 	jump_a1.tween_property(a, "scale", Vector2(1.5, 1.5), .5) # scale
 	jump_a1.set_parallel()
 	jump_a1.tween_property(a, "global_position", center, .5) # back down
@@ -79,12 +81,10 @@ func exec() -> void:
 	await jump_a2.finished
 	
 	# logo B
-	
 	b.visible = true
 	var jump_b2 = b.get_tree().create_tween().bind_node(b).set_ease(Tween.EASE_OUT)
 	jump_height = Vector2(center.x, center.y-center.y*8)
 	jump_b2.tween_property(b, "global_position", Vector2(a.global_position.x, jump_height.y), 1)
-	var jump_c2 = b.get_tree().create_tween().bind_node(b).set_ease(Tween.EASE_OUT)
 	var rotate_b: Tween = b.rotate_x(1.5)
 	rotate_b.play()
 	rotate_b.chain()
@@ -94,8 +94,9 @@ func exec() -> void:
 	jump_b2.tween_property(b, "scale", Vector2(3., 3.), .5)
 	await jump_b2.finished
 
-	
 	var away_l = a.get_tree().create_tween().bind_node(a).set_ease(Tween.EASE_OUT)
 	var away_r = b.get_tree().create_tween().bind_node(b).set_ease(Tween.EASE_OUT)
 	away_l.tween_property(a, "transform", Transform2D(TAU/2, a.scale, a.skew, center - center*4), 1)
 	away_r.tween_property(b, "transform", Transform2D(-TAU/2, b.scale, b.skew, center + center*4), 1)
+	
+	done.emit()
